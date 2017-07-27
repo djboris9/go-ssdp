@@ -24,6 +24,7 @@ type Device struct {
 	UPC              string      `xml:"device>UPC"`
 	PresentationURL  string      `xml:"device>presentationURL"`
 	Icons            []Icon      `xml:"device>iconList>icon"`
+	Location         url.URL     // URL to device description XML
 }
 
 type SpecVersion struct {
@@ -57,6 +58,8 @@ func collectDevices(locations []url.URL) ([]Device, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		device.Location = location
 		devices = append(devices, *device)
 	}
 
